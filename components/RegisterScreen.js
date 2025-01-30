@@ -1,55 +1,44 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { SocialIcon } from 'react-native-elements';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enter your email and password to continue</Text>
-      
+      <Text style={styles.title}>
+        Create your account and enjoy renting motorcycles in Cebu with ease.
+      </Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Name"
+        autoCapitalize="words"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Number"
+        keyboardType="phone-pad"
+      />
+
       <TextInput
         style={styles.input}
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      
+
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
       />
-      
-      <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </TouchableOpacity>
-      
+
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Enter</Text>
+        <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
-      
-      <Text style={styles.orText}>or</Text>
-      
-      <SocialIcon
-        title="Sign in with Google"
-        button
-        type="google"
-      />
-      
-      <SocialIcon
-        title="Sign in with Facebook"
-        button
-        type="facebook"
-      />
-      
-      <Text style={styles.registerText}>
-        Don't have an account?{' '}
-        <Text
-          style={styles.registerLink}
-          onPress={() => navigation.navigate('Register')}
-        >
-          Register Here.
-        </Text>
+
+      <Text style={styles.signInText}>
+        Already have an account? <Text style={styles.signInLink}>Sign In</Text>
       </Text>
     </View>
   );
@@ -75,11 +64,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
-  forgotPassword: {
-    textAlign: 'right',
-    color: '#888',
-    marginBottom: 20,
-  },
   button: {
     backgroundColor: '#ff0000',
     padding: 15,
@@ -91,19 +75,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  orText: {
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#888',
-  },
-  registerText: {
+  signInText: {
     textAlign: 'center',
     marginTop: 20,
     color: '#888',
   },
-  registerLink: {
+  signInLink: {
     color: '#ff0000',
   },
 });
 
-export default LoginScreen; 
+export default RegisterScreen; 
