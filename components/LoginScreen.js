@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 
 const LoginScreen = ({ navigation }) => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Navigate to Motorcycle List on login button click
+    navigation.navigate('MotorcycleList');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter your email and password to continue</Text>
@@ -12,21 +21,26 @@ const LoginScreen = ({ navigation }) => {
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
       
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
       
       <TouchableOpacity>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Enter</Text>
       </TouchableOpacity>
+      
       
       <Text style={styles.orText}>or</Text>
       
