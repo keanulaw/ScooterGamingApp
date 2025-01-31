@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   activeSegment: {
-    backgroundColor: '#4b6584',
+    backgroundColor: '#FF3B30',
   },
   segmentText: {
     color: '#666',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   bookingDate: {
     marginLeft: 8,
-    color: '#4b6584',
+    color: 'black',
     fontWeight: '600',
   },
   statusBadge: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   primaryButton: {
-    backgroundColor: '#4b6584',
+    backgroundColor: '#FF3B30',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     borderWidth: 1,
-    borderColor: '#4b6584',
+    borderColor: 'black',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 8,

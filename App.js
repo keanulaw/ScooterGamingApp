@@ -9,6 +9,8 @@ import MotorcycleListScreen from './components/MotorcycleListScreen';
 import MotorcycleFavoritesScreen from './components/MotorcycleFavoritesScreen';
 import MotorcycleBookScreen from './components/MotorcycleBookScreen';
 import ProfilePage from './components/ProfilePage';
+import DashboardScreen from './components/DashboardScreen';
+import MotorcycleDetailScreen from './components/MotorcycleDetailScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,7 +38,7 @@ function HomeTabs() {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={MotorcycleListScreen} />
+      <Tab.Screen name="Home" component={DashboardScreen} />
       <Tab.Screen name="Favorite" component={MotorcycleFavoritesScreen} />
       <Tab.Screen name="Book" component={MotorcycleBookScreen} />
       <Tab.Screen name="Account" component={ProfilePage} />
@@ -54,6 +56,7 @@ export default function App() {
         <Stack.Screen name="MotorcycleFavoritesScreen" component={HomeTabs} options={{ headerShown: false }} />
         <Stack.Screen name="MotorcycleBookScreen" component={HomeTabs} options={{ headerShown: false }} />
         <Stack.Screen name="ProfilePage" component={HomeTabs} options={{ headerShown: false }} />
+        <Stack.Screen name="MotorcycleDetail" component={MotorcycleDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

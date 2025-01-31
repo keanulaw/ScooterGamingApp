@@ -1,7 +1,8 @@
 // MotorcycleListScreen.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const motorcycleData = [
   { id: 1, name: 'Honda Beat', location: 'Lahug, Salinas Drive Extension', price: 500, rating: 4 },
@@ -13,6 +14,14 @@ const motorcycleData = [
 
 const MotorcycleListScreen = () => {
   const [searchText, setSearchText] = useState('');
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    if (route.params?.query) {
+      setSearchText(route.params.query);
+    }
+  }, [route.params?.query]);
 
   const filteredMotorcycles = motorcycleData.filter(motorcycle =>
     motorcycle.name.toLowerCase().includes(searchText.toLowerCase())
@@ -28,7 +37,11 @@ const MotorcycleListScreen = () => {
       />
       <ScrollView>
         {filteredMotorcycles.map((motorcycle) => (
-          <View key={motorcycle.id} style={styles.card}>
+          <TouchableOpacity
+            key={motorcycle.id}
+            style={styles.card}
+            onPress={() => navigation.navigate('MotorcycleDetail', { motorcycle })}
+          >
             {/* Placeholder for motorcycle image */}
             <View style={styles.imagePlaceholder}></View>
             <View style={styles.cardContent}>
@@ -46,7 +59,7 @@ const MotorcycleListScreen = () => {
                 ))}
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>

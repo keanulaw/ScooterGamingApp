@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const MotorcycleFavoritesScreen = () => {
+  const navigation = useNavigation();
   const favoriteMotorcycles = [
     { 
       id: 1, 
@@ -26,7 +28,11 @@ const MotorcycleFavoritesScreen = () => {
       
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {favoriteMotorcycles.map((item) => (
-          <View key={item.id} style={styles.card}>
+          <TouchableOpacity
+            key={item.id}
+            style={styles.card}
+            onPress={() => navigation.navigate('MotorcycleDetail', { motorcycle: item })}
+          >
             <View style={styles.imagePlaceholder}>
               <Text style={styles.placeholderText}>Image</Text>
             </View>
@@ -54,7 +60,7 @@ const MotorcycleFavoritesScreen = () => {
             <TouchableOpacity style={styles.removeButton}>
               <Text style={styles.removeButtonText}>Remove</Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
