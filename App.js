@@ -11,6 +11,10 @@ import MotorcycleBookScreen from './components/MotorcycleBookScreen';
 import ProfilePage from './components/ProfilePage';
 import DashboardScreen from './components/DashboardScreen';
 import MotorcycleDetailScreen from './components/MotorcycleDetailScreen';
+import DateTimePickerScreen from './components/DateTimePickerScreen';
+import PaymentScreen from './components/PaymentScreen';
+import PaymentDetailsScreen from './components/PaymentDetailsScreen';
+import PaymentSuccessScreen from './components/PaymentSuccessScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +61,10 @@ export default function App() {
         <Stack.Screen name="MotorcycleBookScreen" component={HomeTabs} options={{ headerShown: false }} />
         <Stack.Screen name="ProfilePage" component={HomeTabs} options={{ headerShown: false }} />
         <Stack.Screen name="MotorcycleDetail" component={MotorcycleDetailScreen} />
+        <Stack.Screen name="DateTimePicker" component={DateTimePickerScreen} />
+        <Stack.Screen name="Payment" component={PaymentScreen} />
+        <Stack.Screen name="PaymentDetails" component={PaymentDetailsScreen} />
+        <Stack.Screen name="PaymentSuccess" component={PaymentSuccessScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

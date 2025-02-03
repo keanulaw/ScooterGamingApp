@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const MotorcycleDetailScreen = ({ route }) => {
+const MotorcycleDetailScreen = ({ route, navigation }) => {
   const { motorcycle } = route.params;
 
   return (
@@ -27,11 +27,15 @@ const MotorcycleDetailScreen = ({ route }) => {
         </View>
 
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>₱{motorcycle.price} Per Day</Text>
-          <TouchableOpacity style={styles.bookButton}>
-            <Text style={styles.bookButtonText}>Book now</Text>
-          </TouchableOpacity>
+          <Text style={styles.price}>{motorcycle.price} Per Day</Text>
         </View>
+
+        <TouchableOpacity
+          style={styles.dateButton}
+          onPress={() => navigation.navigate('DateTimePicker')}
+        >
+          <Text style={styles.dateButtonText}>Set Date & Time</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -43,8 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   imageCarousel: {
-    height: 250,
-    backgroundColor: '#f9f9f9',
+    height: 200,
+    backgroundColor: '#f0f0f0',
   },
   image: {
     width: '100%',
@@ -56,14 +60,15 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   location: {
     fontSize: 16,
     color: 'gray',
-    marginVertical: 10,
+    marginBottom: 20,
   },
   addOns: {
-    marginVertical: 20,
+    marginBottom: 20,
   },
   addOnsTitle: {
     fontSize: 18,
@@ -83,23 +88,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 20,
   },
   price: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'red',
   },
-  bookButton: {
+  dateButton: {
     backgroundColor: 'red',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 15,
     borderRadius: 5,
+    alignItems: 'center',
   },
-  bookButtonText: {
+  dateButtonText: {
     color: '#fff',
     fontSize: 16,
   },
