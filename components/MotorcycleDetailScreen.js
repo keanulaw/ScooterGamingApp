@@ -32,7 +32,7 @@ const MotorcycleDetailScreen = ({ route, navigation }) => {
 
         <TouchableOpacity
           style={styles.dateButton}
-          onPress={() => navigation.navigate('DateTimePicker')}
+          onPress={() => navigation.navigate('DateTimePicker', { pricePerDay: motorcycle.price })}
         >
           <Text style={styles.dateButtonText}>Set Date & Time</Text>
         </TouchableOpacity>

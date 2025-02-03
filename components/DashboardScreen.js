@@ -5,10 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 
 const DashboardScreen = () => {
   const scooters = [
-    { id: 1, name: 'Honda Beat', cc: '110cc', price: '₱500/Day', image: 'path/to/image1' },
-    { id: 2, name: 'Honda Click 125i', cc: '125cc', price: '₱600/Day', image: 'path/to/image2' },
-    { id: 3, name: 'Nmax/Aerox/ADV', cc: '150cc', price: '₱800/Day', image: 'path/to/image3' },
-    { id: 4, name: 'Xmax', cc: '300cc', price: '₱2000/Day', image: 'path/to/image4' },
+    { id: 1, name: 'Honda Beat', cc: '110cc', price: 500, image: 'path/to/image1' },
+    { id: 2, name: 'Honda Click 125i', cc: '125cc', price: 600, image: 'path/to/image2' },
+    { id: 3, name: 'Nmax/Aerox/ADV', cc: '150cc', price: 800, image: 'path/to/image3' },
+    { id: 4, name: 'Xmax', cc: '300cc', price: 2000, image: 'path/to/image4' },
   ];
 
   const [searchText, setSearchText] = useState('');
@@ -59,7 +59,7 @@ const DashboardScreen = () => {
             <Image source={{ uri: scooter.image }} style={styles.scooterImage} />
             <Text style={styles.scooterName}>{scooter.name}</Text>
             <Text style={styles.scooterCC}>{scooter.cc}</Text>
-            <Text style={styles.scooterPrice}>{scooter.price}</Text>
+            <Text style={styles.scooterPrice}>{scooter.price} Per Day</Text>
             <TouchableOpacity style={styles.detailsButton}>
               <Text style={styles.detailsButtonText}></Text>
             </TouchableOpacity>

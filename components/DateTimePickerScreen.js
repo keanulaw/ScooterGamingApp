@@ -4,28 +4,23 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import RNPickerSelect from 'react-native-picker-select';
 
-export default function DateTimePickerScreen({ navigation }) {
+export default function DateTimePickerScreen({ route, navigation }) {
+  const { pricePerDay } = route.params;
   const [selectedDates, setSelectedDates] = useState({});
   const [pickUpTime, setPickUpTime] = useState('10:00 AM');
   const [returnTime, setReturnTime] = useState('9:00 PM');
   const [totalPrice, setTotalPrice] = useState(0);
-  const pricePerDay = 500; // Example price per day
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const onDayPress = (day) => {
-    const newDates = { ...selectedDates };
-
-    if (Object.keys(newDates).length === 0) {
-      newDates[day.dateString] = { startingDay: true, color: 'red', textColor: 'white' };
+    if (!startDate || (startDate && endDate)) {
+      setStartDate(day.dateString);
+      setEndDate(null);
+      setSelectedDates({ [day.dateString]: { startingDay: true, color: 'red', textColor: 'white' } });
     } else {
-      const startDate = Object.keys(newDates)[0];
-      const endDate = day.dateString;
-
-      if (startDate === endDate) {
-        setSelectedDates({});
-        return;
-      }
-
-      const range = getDatesInRange(startDate, endDate);
+      const range = getDatesInRange(startDate, day.dateString);
+      const newDates = {};
       range.forEach((date, index) => {
         newDates[date] = {
           color: 'red',
@@ -34,28 +29,29 @@ export default function DateTimePickerScreen({ navigation }) {
           endingDay: index === range.length - 1,
         };
       });
+      setSelectedDates(newDates);
+      setEndDate(day.dateString);
     }
-
-    setSelectedDates(newDates);
   };
 
   const getDatesInRange = (start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
     const dates = [];
-
-    while (startDate <= endDate) {
-      dates.push(startDate.toISOString().split('T')[0]);
-      startDate.setDate(startDate.getDate() + 1);
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      dates.push(currentDate.toISOString().split('T')[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-
     return dates;
   };
 
   useEffect(() => {
-    const daysSelected = Object.keys(selectedDates).length;
-    setTotalPrice(daysSelected * pricePerDay);
-  }, [selectedDates]);
+    if (startDate && endDate) {
+      const daysSelected = Object.keys(selectedDates).length;
+      setTotalPrice(daysSelected * Number(pricePerDay));
+    }
+  }, [selectedDates, pricePerDay]);
 
   return (
     <View style={styles.container}>
@@ -98,7 +94,8 @@ export default function DateTimePickerScreen({ navigation }) {
         <Text style={styles.priceText}>₱{totalPrice}</Text>
         <TouchableOpacity
           style={styles.bookButton}
-          onPress={() => navigation.navigate('Payment', { totalPrice })}>
+          onPress={() => navigation.navigate('Payment', { totalPrice })}
+        >
           <Text style={styles.bookButtonText}>Book Now</Text>
         </TouchableOpacity>
       </View>
