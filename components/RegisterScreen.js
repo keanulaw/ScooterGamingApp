@@ -1,28 +1,105 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ActivityIndicator
+} from 'react-native';
+import api from "../api/api"; // ✅ API call remains
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (name, value) => {
+    setForm({ ...form, [name]: value.trim() });
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleRegister = async () => {
+    if (!form.username || !form.email || !form.password || !form.firstName || !form.lastName) {
+      Alert.alert("Error", "All fields are required!");
+      return;
+    }
+
+    if (!validateEmail(form.email)) {
+      Alert.alert("Error", "Please enter a valid email address.");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters long.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // ✅ API Call instead of Firestore
+      await api.post("/register", {
+        username: form.username,
+        email: form.email,
+        firstName: form.firstName,
+        lastName: form.lastName,
+        password: form.password, // Ensure the backend handles password securely
+      });
+
+      Alert.alert("Success", "Registration successful!");
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error("Registration Error:", error);
+      Alert.alert("Error", error.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Create your account and enjoy renting motorcycles in Cebu with ease.
-      </Text>
+      <Text style={styles.title}>Create an account and enjoy motorcycle rentals in Cebu!</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Name"
+        placeholder="First Name"
+        value={form.firstName}
+        onChangeText={(text) => handleChange("firstName", text)}
         autoCapitalize="words"
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Number"
-        keyboardType="phone-pad"
+        placeholder="Last Name"
+        value={form.lastName}
+        onChangeText={(text) => handleChange("lastName", text)}
+        autoCapitalize="words"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={form.username}
+        onChangeText={(text) => handleChange("username", text)}
+        autoCapitalize="none"
       />
 
       <TextInput
         style={styles.input}
         placeholder="Email"
+        value={form.email}
+        onChangeText={(text) => handleChange("email", text)}
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -30,16 +107,24 @@ const RegisterScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        value={form.password}
+        onChangeText={(text) => handleChange("password", text)}
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Create Account</Text>
+      <TouchableOpacity
+        style={[styles.button, loading && styles.buttonDisabled]}
+        onPress={handleRegister}
+        disabled={loading}
+      >
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Account</Text>}
       </TouchableOpacity>
 
-      <Text style={styles.signInText}>
-        Already have an account? <Text style={styles.signInLink}>Sign In</Text>
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.signInText}>
+          Already have an account? <Text style={styles.signInLink}>Sign In</Text>
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -71,6 +156,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
+  },
   buttonText: {
     color: '#fff',
     fontSize: 16,
@@ -82,7 +170,8 @@ const styles = StyleSheet.create({
   },
   signInLink: {
     color: '#ff0000',
+    fontWeight: 'bold',
   },
 });
 
-export default RegisterScreen; 
+export default RegisterScreen;
