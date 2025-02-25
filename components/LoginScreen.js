@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Image } from "react-native";
 import { 
   View, 
   Text, 
@@ -8,8 +9,11 @@ import {
   Alert, 
   ActivityIndicator 
 } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ Correct Import
 import { SocialIcon } from 'react-native-elements';
 import api from "../api/api";
+
+const defaultProfileImage = require("../assets/download.png"); // ✅ Import the default image
 
 const LoginScreen = ({ navigation }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -30,8 +34,20 @@ const LoginScreen = ({ navigation }) => {
 
       if (response.data && response.data.user) {
         console.log("✅ Login Success:", response.data.user);
-        Alert.alert("Success", `Welcome, ${response.data.user.firstName}!`);
-        navigation.replace('MotorcycleList');
+
+        // Set default profile image if null
+        const userData = {
+          ...response.data.user,
+          profileImage: response.data.user.profileImage || Image.resolveAssetSource(defaultProfileImage).uri,
+        };
+
+        // ✅ Save user data to AsyncStorage
+        await AsyncStorage.setItem("userData", JSON.stringify(userData));
+
+        Alert.alert("Success", `Welcome, ${userData.firstName}!`);
+        
+        // Navigate after saving data
+        navigation.replace("MotorcycleList");
       } else {
         throw new Error("Invalid response from server");
       }
