@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image } from "react-native";
+import { Image, Button } from "react-native";
 import { 
   View, 
   Text, 
@@ -61,6 +61,11 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
+  // New function to navigate directly to HomeTabs
+  const goToDashboard = () => {
+    navigation.navigate('MotorcycleList'); // Navigate to the tab navigator
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter your email or username and password to continue</Text>
@@ -105,6 +110,12 @@ const LoginScreen = ({ navigation }) => {
           Register Here.
         </Text>
       </Text>
+
+      {/* Temporary button to navigate to DashboardScreen */}
+      <Button 
+        title="Go to Dashboard" 
+        onPress={goToDashboard} // Use the new function
+      />
     </View>
   );
 };

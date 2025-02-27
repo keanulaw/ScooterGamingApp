@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,13 +16,12 @@ import DateTimePickerScreen from './components/DateTimePickerScreen';
 import PaymentScreen from './components/PaymentScreen';
 import PaymentDetailsScreen from './components/PaymentDetailsScreen';
 import PaymentSuccessScreen from './components/PaymentSuccessScreen';
-
-
+import InquireScreen from './components/InquireScreen';
+import BookingDetailScreen from './components/BookingDetailScreen';
+import ChatScreen from './components/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-
 
 function HomeTabs() {
   return (
@@ -67,6 +67,17 @@ export default function App() {
         <Stack.Screen name="Payment" component={PaymentScreen} />
         <Stack.Screen name="PaymentDetails" component={PaymentDetailsScreen} />
         <Stack.Screen name="PaymentSuccess" component={PaymentSuccessScreen} />
+        <Stack.Screen
+          name="Inquire"
+          component={InquireScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BookingDetail"
+          component={BookingDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

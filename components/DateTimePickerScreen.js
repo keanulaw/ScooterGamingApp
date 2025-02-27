@@ -17,7 +17,13 @@ export default function DateTimePickerScreen({ route, navigation }) {
     if (!startDate || (startDate && endDate)) {
       setStartDate(day.dateString);
       setEndDate(null);
-      setSelectedDates({ [day.dateString]: { startingDay: true, color: 'red', textColor: 'white' } });
+      setSelectedDates({
+        [day.dateString]: {
+          startingDay: true,
+          color: 'red',
+          textColor: 'white',
+        },
+      });
     } else {
       const range = getDatesInRange(startDate, day.dateString);
       const newDates = {};
@@ -73,7 +79,6 @@ export default function DateTimePickerScreen({ route, navigation }) {
           items={[
             { label: '10:00 AM', value: '10:00 AM' },
             { label: '11:00 AM', value: '11:00 AM' },
-            // Add more time options as needed
           ]}
           value={pickUpTime}
         />
@@ -85,7 +90,6 @@ export default function DateTimePickerScreen({ route, navigation }) {
           items={[
             { label: '9:00 PM', value: '9:00 PM' },
             { label: '10:00 PM', value: '10:00 PM' },
-            // Add more time options as needed
           ]}
           value={returnTime}
         />
@@ -94,9 +98,9 @@ export default function DateTimePickerScreen({ route, navigation }) {
         <Text style={styles.priceText}>₱{totalPrice}</Text>
         <TouchableOpacity
           style={styles.bookButton}
-          onPress={() => navigation.navigate('Payment', { totalPrice })}
+          onPress={() => navigation.navigate('Inquire', { totalPrice })}
         >
-          <Text style={styles.bookButtonText}>Book Now</Text>
+          <Text style={styles.bookButtonText}>Inquire Now</Text>
         </TouchableOpacity>
       </View>
     </View>
