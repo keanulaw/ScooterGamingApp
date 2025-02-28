@@ -52,6 +52,7 @@ const ProfilePage = () => {
       </View>
     );
   }
+  
 
   if (!user) {
     return (

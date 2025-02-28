@@ -8,7 +8,6 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
-import api from "../api/api"; // ✅ API call remains
 
 const RegisterScreen = ({ navigation }) => {
   const [form, setForm] = useState({
@@ -66,6 +65,7 @@ const RegisterScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
+
 
   return (
     <View style={styles.container}>
